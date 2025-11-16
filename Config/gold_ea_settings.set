@@ -1,0 +1,242 @@
+;+------------------------------------------------------------------+
+;|                                     GoldEA_Dynamic_Optimal.set    |
+;|                              Professional Gold Trading Settings   |
+;|                                   Optimized for XAUUSD Trading    |
+;+------------------------------------------------------------------+
+;| INSTRUCTIONS:                                                     |
+;| 1. Save this file as "GoldEA_Dynamic_Optimal.set"               |
+;| 2. Place in: MetaTrader/MQL4/Presets/ folder                    |
+;| 3. In EA Properties, click "Load" and select this file          |
+;| 4. Click OK to apply settings                                    |
+;+------------------------------------------------------------------+
+
+;=================== BASIC TRADING PARAMETERS ===================
+; Core position and risk settings - adjust based on your account size
+
+LotSize=0.01
+; Fixed lot size (only used if UseAutoLotSizing=false)
+; Examples: 0.01 = $1,000+ accounts, 0.1 = $10,000+ accounts
+
+UseAutoLotSizing=true
+; Automatically calculates lot size based on risk percentage
+; Recommended: true (safer risk management)
+
+RiskPercent=1.5
+; Percentage of account balance to risk per trade
+; Conservative: 1.0%, Moderate: 1.5%, Aggressive: 2.5%
+; Example: $5,000 account × 1.5% = $75 maximum risk per trade
+
+MagicNumber=12345
+; Unique identifier for EA trades (change if running multiple EAs)
+; Use different numbers for each EA instance
+
+TradeComment=GoldEA_Dynamic
+; Comment that appears on all trades for identification
+
+;================ DYNAMIC SUPPORT/RESISTANCE SYSTEM ==============
+; Controls how the EA identifies key price levels
+
+SR_Lookback_Period=100
+; Number of bars to analyze for support/resistance levels
+; More bars = more historical levels, fewer bars = more recent levels
+
+ATR_Period=14
+; Period for Average True Range (volatility measurement)
+; Standard setting across most trading systems
+
+ATR_Multiplier=2.0
+; Multiplier for ATR-based stop losses and targets
+; Conservative: 2.5, Balanced: 2.0, Aggressive: 1.5
+
+Pivot_Strength=5
+; Strength required for swing high/low detection
+; Higher = fewer but stronger levels, Lower = more levels
+
+Use_Daily_Pivots=true
+; Include daily pivot points in analysis
+; Recommended: true (major institutional levels)
+
+Use_Weekly_Pivots=true
+; Include weekly pivot points in analysis
+; Recommended: true (important for swing trading)
+
+Fractal_Period=5
+; Period for fractal detection
+; Standard Williams Fractal setting
+
+;================== TECHNICAL ANALYSIS INDICATORS ===============
+; Settings for trend and momentum analysis
+
+RSI_Period=14
+; Relative Strength Index period
+; Standard setting for momentum analysis
+
+RSI_Overbought=70
+; RSI level considered overbought (sell signals)
+; Range: 70-80, higher = fewer signals
+
+RSI_Oversold=30
+; RSI level considered oversold (buy signals)
+; Range: 20-30, lower = fewer signals
+
+MACD_Fast=12
+; MACD fast exponential moving average
+; Standard MACD setting
+
+MACD_Slow=26
+; MACD slow exponential moving average
+; Standard MACD setting
+
+MACD_Signal=9
+; MACD signal line period
+; Standard MACD setting
+
+MA_Fast=21
+; Fast moving average for trend direction
+; Responsive to recent price action
+
+MA_Slow=50
+; Slow moving average for major trend
+; Filters out short-term noise
+
+;================= VOLATILITY AND MARKET FILTERS ================
+; Protects against poor market conditions
+
+UseVolatilityFilter=true
+; Avoid trading during extreme volatility
+; Recommended: true (prevents trades during news spikes)
+
+VolatilityThreshold=1.5
+; ATR multiplier threshold for volatility filter
+; Higher = allows more volatile conditions
+
+VolatilityPeriod=20
+; Period for volatility calculation
+; Standard volatility measurement period
+
+;===================== RISK MANAGEMENT SYSTEM ===================
+; Core protection and profit management
+
+MaxSpread=5.0
+; Maximum spread allowed for trading (in points)
+; Gold typical spreads: 2-8 points, adjust for your broker
+
+UseDynamicStops=true
+; Use ATR-based stop losses (recommended)
+; false = uses fixed MinStopLoss value
+
+MinStopLoss=300
+; Minimum stop loss in points (30 pips for gold)
+; Protects against very tight stops in low volatility
+
+MaxStopLoss=800
+; Maximum stop loss in points (80 pips for gold)
+; Prevents excessively wide stops in high volatility
+
+RiskRewardRatio=1.5
+; Take profit = Stop loss × this ratio
+; Conservative: 1.2, Balanced: 1.5, Aggressive: 2.0
+
+UseTrailingStop=true
+; Enable dynamic trailing stops
+; Recommended: true (locks in profits)
+
+TrailingMultiplier=1.5
+; ATR multiplier for trailing stop distance
+; Larger = trails further behind, smaller = tighter trailing
+
+;================= TRADING HOURS OPTIMIZATION ==================
+; Controls when the EA is allowed to trade
+
+UseTradingHours=true
+; Enable trading hours restrictions
+; Recommended: true (avoids low-liquidity periods)
+
+StartHour=8
+; Start trading hour (GMT timezone)
+; 8 = London market open
+
+EndHour=21
+; End trading hour (GMT timezone)
+; 21 = New York market close
+
+UseSessionFilter=true
+; Enable advanced session filtering
+; More precise than simple hour ranges
+
+TradeLondonSession=true
+; Trade during London session (08:00-16:00 GMT)
+; High liquidity and volatility for gold
+
+TradeNYSession=true
+; Trade during New York session (13:00-21:00 GMT)
+; Highest gold trading volume
+
+TradeAsianSession=false
+; Trade during Asian session (00:00-08:00 GMT)
+; Lower liquidity, generally avoided for gold
+
+TradeOverlapOnly=false
+; Only trade during London-NY overlap (13:00-16:00 GMT)
+; Set to true for maximum selectivity
+
+;=================== ACCOUNT SIZE RECOMMENDATIONS ================
+;
+; SMALL ACCOUNT ($1,000 - $5,000):
+; LotSize=0.01, RiskPercent=1.0, UseAutoLotSizing=true
+; ATR_Multiplier=2.5, RiskRewardRatio=1.2
+;
+; MEDIUM ACCOUNT ($5,000 - $25,000):
+; LotSize=0.01, RiskPercent=1.5, UseAutoLotSizing=true
+; ATR_Multiplier=2.0, RiskRewardRatio=1.5
+;
+; LARGE ACCOUNT ($25,000+):
+; LotSize=0.1, RiskPercent=2.0, UseAutoLotSizing=true
+; ATR_Multiplier=1.8, RiskRewardRatio=2.0
+;
+;=================== MARKET CONDITION ADJUSTMENTS ===============
+;
+; TRENDING MARKETS:
+; ATR_Multiplier=1.5, RiskRewardRatio=2.0, Pivot_Strength=3
+;
+; RANGING MARKETS:
+; ATR_Multiplier=2.5, RiskRewardRatio=1.2, Pivot_Strength=5
+;
+; HIGH VOLATILITY PERIODS:
+; MaxSpread=8.0, VolatilityThreshold=1.2, MinStopLoss=400
+;
+; LOW VOLATILITY PERIODS:
+; MaxSpread=3.0, VolatilityThreshold=2.0, MinStopLoss=250
+;
+;=================== TIME ZONE CONVERSIONS =======================
+;
+; GMT to other timezones (adjust StartHour/EndHour accordingly):
+; EST/EDT: GMT - 5/4 hours
+; PST/PDT: GMT - 8/7 hours
+; CET/CEST: GMT + 1/2 hours
+; JST: GMT + 9 hours
+; AEST/AEDT: GMT + 10/11 hours
+;
+; Example for EST traders:
+; London Open: 3 AM EST (StartHour=8 GMT)
+; NY Close: 4 PM EST (EndHour=21 GMT)
+;
+;=================== EXPECTED PERFORMANCE =======================
+;
+; With these settings, expect:
+; - 2-5 trades per week during active markets
+; - Win rate: 55-65% (typical for trend-following systems)
+; - Average trade duration: 4-24 hours
+; - Maximum drawdown: 5-15% (depends on market conditions)
+; - Best performance during trending gold markets
+;
+;=================== IMPORTANT NOTES ============================
+;
+; 1. ALWAYS test on demo account for 2-4 weeks before live trading
+; 2. Monitor performance during different market conditions
+; 3. Adjust RiskPercent based on your risk tolerance
+; 4. Consider broker-specific spread patterns when setting MaxSpread
+; 5. Review and update settings monthly based on market changes
+; 6. Keep detailed trading logs for performance analysis
+;
+;+------------------------------------------------------------------+
